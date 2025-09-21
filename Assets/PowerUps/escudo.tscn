@@ -1,0 +1,72 @@
+[gd_scene load_steps=11 format=3 uid="uid://f2q80060te4o"]
+
+[ext_resource type="Script" uid="uid://0na7pwct1f3b" path="res://Assets/Scripts/escudo.gd" id="1_3miay"]
+[ext_resource type="Texture2D" uid="uid://v82yccd2vutj" path="res://Assets/PowerUps/Escudo.png" id="2_x2x8h"]
+[ext_resource type="Texture2D" uid="uid://bgtgooioafce7" path="res://Assets/PowerUps/plim.png" id="3_x2x8h"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3miay"]
+radius = 16.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_211fn"]
+atlas = ExtResource("2_x2x8h")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_moklg"]
+atlas = ExtResource("3_x2x8h")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bnvo2"]
+atlas = ExtResource("3_x2x8h")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wuotc"]
+atlas = ExtResource("3_x2x8h")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_30ohb"]
+atlas = ExtResource("3_x2x8h")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pf0ce"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_211fn")
+}],
+"loop": true,
+"name": &"escudo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_moklg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bnvo2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wuotc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_30ohb")
+}],
+"loop": false,
+"name": &"plim",
+"speed": 5.0
+}]
+
+[node name="Escudo" type="Area2D"]
+collision_layer = 8
+script = ExtResource("1_3miay")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_3miay")
+debug_color = Color(0.745727, 0.462674, 7.70092e-07, 0.42)
+
+[node name="anim" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_pf0ce")
+animation = &"escudo"
+autoplay = "escudo"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="anim" to="." method="_on_animated_sprite_2d_animation_finished"]

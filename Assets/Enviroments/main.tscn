@@ -1,0 +1,121 @@
+[gd_scene load_steps=11 format=3 uid="uid://d0dd34lrg6mbx"]
+
+[ext_resource type="PackedScene" uid="uid://0d6vpsccbrr2" path="res://Assets/Player/player.tscn" id="1_admge"]
+[ext_resource type="Script" uid="uid://cbg0abbq833ed" path="res://Assets/Scripts/main.gd" id="1_h6h34"]
+[ext_resource type="Texture2D" uid="uid://bcevsvn3k6pha" path="res://Assets/Enviroments/ceu.png" id="2_l4hyf"]
+[ext_resource type="Script" uid="uid://dp270lykglxpo" path="res://Assets/Scripts/camera_2d.gd" id="3_aundt"]
+[ext_resource type="Texture2D" uid="uid://sa2kis0vvqil" path="res://Assets/Enviroments/predios.png" id="3_pyevi"]
+[ext_resource type="Script" uid="uid://bpte77kl7loef" path="res://Assets/Scripts/colisor.gd" id="4_j58ck"]
+[ext_resource type="Script" uid="uid://dwkdv31b1me1p" path="res://Assets/Scripts/aspirador.gd" id="7_kmcn1"]
+[ext_resource type="Script" uid="uid://6r8ixdjbw8xj" path="res://Assets/Scripts/spawner.gd" id="8_kmcn1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_admge"]
+size = Vector2(398, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p64ov"]
+size = Vector2(53, 842)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_h6h34")
+
+[node name="ceu" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ceu"]
+motion_scale = Vector2(0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ceu/ParallaxLayer"]
+position = Vector2(120, 112)
+texture = ExtResource("2_l4hyf")
+
+[node name="Predios" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Predios"]
+motion_mirroring = Vector2(512, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Predios/ParallaxLayer"]
+position = Vector2(120, 112)
+texture = ExtResource("3_pyevi")
+
+[node name="Player" parent="." instance=ExtResource("1_admge")]
+position = Vector2(56, 56)
+jump_force = -40.0
+gravidade = 20.0
+
+[node name="Camera2D" type="Camera2D" parent="." groups=["camera"]]
+position = Vector2(0, 112)
+editor_draw_limits = true
+script = ExtResource("3_aundt")
+
+[node name="Area2D" type="Area2D" parent="Camera2D"]
+position = Vector2(0, -112)
+script = ExtResource("4_j58ck")
+
+[node name="colisores" type="StaticBody2D" parent="Camera2D/Area2D"]
+position = Vector2(262, 61)
+collision_layer = 16
+
+[node name="baixo" type="CollisionShape2D" parent="Camera2D/Area2D/colisores"]
+position = Vector2(-190, 163)
+shape = SubResource("RectangleShape2D_admge")
+
+[node name="cima" type="CollisionShape2D" parent="Camera2D/Area2D/colisores"]
+position = Vector2(-191, -56)
+shape = SubResource("RectangleShape2D_admge")
+
+[node name="aspirador" type="Area2D" parent="Camera2D"]
+z_index = 2
+position = Vector2(-40, 64)
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("7_kmcn1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/aspirador"]
+position = Vector2(-128, -63)
+shape = SubResource("RectangleShape2D_p64ov")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 126.0
+offset_bottom = 27.0
+
+[node name="testeLabel" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 180.0
+offset_bottom = 23.0
+text = "botão clicado: "
+
+[node name="testeLabel2" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_top = 19.0
+offset_right = 152.0
+offset_bottom = 42.0
+text = "posicao da camera:"
+
+[node name="camera posicao" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 152.0
+offset_top = 19.0
+offset_right = 240.0
+offset_bottom = 42.0
+
+[node name="Spawner" type="Node2D" parent="."]
+script = ExtResource("8_kmcn1")
+
+[node name="Marker2D" type="Marker2D" parent="Spawner"]
+position = Vector2(256, 112)
+
+[node name="Marker2D3" type="Marker2D" parent="Spawner"]
+position = Vector2(256, 162)
+
+[node name="Marker2D2" type="Marker2D" parent="Spawner"]
+position = Vector2(256, 50)
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="area_entered" from="Camera2D/aspirador" to="Camera2D/aspirador" method="_on_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

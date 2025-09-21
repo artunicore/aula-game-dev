@@ -1,0 +1,89 @@
+[gd_scene load_steps=13 format=3 uid="uid://c7yfilo8dslc2"]
+
+[ext_resource type="Script" uid="uid://d4dgvbliyl662" path="res://Assets/Scripts/kryptonita.gd" id="1_0n1dd"]
+[ext_resource type="Texture2D" uid="uid://dhduby3dr5vv" path="res://Assets/Obstaculos/kryptonita.png" id="1_gt8on"]
+[ext_resource type="Texture2D" uid="uid://caxkxn1q55iu" path="res://Assets/Obstaculos/estilhaco.png" id="3_yo2ry"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0n1dd"]
+size = Vector2(27, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yo2ry"]
+atlas = ExtResource("1_gt8on")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jve10"]
+atlas = ExtResource("1_gt8on")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u6evw"]
+atlas = ExtResource("1_gt8on")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8twcu"]
+atlas = ExtResource("3_yo2ry")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_txw8t"]
+atlas = ExtResource("3_yo2ry")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2y1wm"]
+atlas = ExtResource("3_yo2ry")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x838n"]
+atlas = ExtResource("3_yo2ry")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8twcu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yo2ry")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jve10")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u6evw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8twcu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_txw8t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2y1wm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x838n")
+}],
+"loop": false,
+"name": &"estilhaço",
+"speed": 5.0
+}]
+
+[node name="Kryptonita" type="Area2D" groups=["obstaculos"]]
+collision_layer = 2
+collision_mask = 21
+script = ExtResource("1_0n1dd")
+
+[node name="colisao" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 0.5)
+shape = SubResource("RectangleShape2D_0n1dd")
+debug_color = Color(4.81308e-08, 0.632165, 0.454436, 0.42)
+
+[node name="anim" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_8twcu")
+animation = &"estilhaço"
+autoplay = "default"
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]

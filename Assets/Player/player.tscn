@@ -1,0 +1,149 @@
+[gd_scene load_steps=21 format=3 uid="uid://0d6vpsccbrr2"]
+
+[ext_resource type="Script" uid="uid://b0sc7r0lfxkns" path="res://Assets/Scripts/player.gd" id="1_6miq6"]
+[ext_resource type="Texture2D" uid="uid://bjq8nq62drf8u" path="res://Assets/Player/Player.png" id="1_61lih"]
+[ext_resource type="Texture2D" uid="uid://b3wrehjuserhg" path="res://Assets/Player/PlayerMorte.png" id="2_5jfoa"]
+[ext_resource type="Texture2D" uid="uid://rfg7mm5abirq" path="res://Assets/Player/Playerfreiano.png" id="3_8ft5u"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fx6gu"]
+atlas = ExtResource("2_5jfoa")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cdil5"]
+atlas = ExtResource("2_5jfoa")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tfsyo"]
+atlas = ExtResource("2_5jfoa")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6miq6"]
+atlas = ExtResource("1_61lih")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ft5u"]
+atlas = ExtResource("1_61lih")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jfoa"]
+atlas = ExtResource("1_61lih")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5j20w"]
+atlas = ExtResource("1_61lih")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aqk3a"]
+atlas = ExtResource("1_61lih")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rul8u"]
+atlas = ExtResource("3_8ft5u")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kg0wl"]
+atlas = ExtResource("3_8ft5u")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2147b"]
+atlas = ExtResource("3_8ft5u")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_csact"]
+atlas = ExtResource("3_8ft5u")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e6xfg"]
+atlas = ExtResource("3_8ft5u")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rul8u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fx6gu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cdil5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tfsyo")
+}],
+"loop": true,
+"name": &"Morte",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6miq6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ft5u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5jfoa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5j20w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aqk3a")
+}],
+"loop": true,
+"name": &"Voando",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rul8u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kg0wl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2147b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_csact")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e6xfg")
+}],
+"loop": true,
+"name": &"freando",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6miq6"]
+size = Vector2(20, 9.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8ft5u"]
+size = Vector2(9, 22)
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+collision_mask = 22
+script = ExtResource("1_6miq6")
+
+[node name="anim" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_rul8u")
+animation = &"Voando"
+autoplay = "Voando"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 1.125)
+shape = SubResource("RectangleShape2D_6miq6")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(4.5, 2)
+shape = SubResource("RectangleShape2D_8ft5u")
+debug_color = Color(0.802864, 0.418342, 5.77569e-07, 0.42)
+
+[node name="dash_timer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="aurapos" type="Marker2D" parent="."]
+position = Vector2(11, -1)
+
+[connection signal="timeout" from="dash_timer" to="." method="_on_dash_timer_timeout"]
