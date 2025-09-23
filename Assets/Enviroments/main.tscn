@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://6r8ixdjbw8xj" path="res://Assets/Scripts/spawner.gd" id="8_kmcn1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_admge"]
-size = Vector2(398, 32)
+size = Vector2(398, 43)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p64ov"]
 size = Vector2(53, 842)
@@ -59,7 +59,7 @@ position = Vector2(-190, 163)
 shape = SubResource("RectangleShape2D_admge")
 
 [node name="cima" type="CollisionShape2D" parent="Camera2D/Area2D/colisores"]
-position = Vector2(-191, -56)
+position = Vector2(-191, -50.5)
 shape = SubResource("RectangleShape2D_admge")
 
 [node name="aspirador" type="Area2D" parent="Camera2D"]

@@ -21,13 +21,14 @@ var can_move = true
 func _physics_process(delta: float) -> void:
 	
 	if can_move:
-		# Add the gravity.
-		if not is_on_floor():
-			velocity.y += gravidade * delta
-
-		# Handle jump.
-		if Input.is_action_pressed("ui_accept"):
-			velocity.y += jump_force
+		
+		# movimentacao cima e baixo
+		if Input.is_action_pressed("ui_up"):
+			velocity.y = jump_force
+		elif Input.is_action_pressed("ui_down"):
+			velocity.y = -jump_force
+		else:
+			velocity.y = 0
 		
 		var direction = Input.get_axis("ui_left","ui_right")
 		if direction !=0:
@@ -36,19 +37,19 @@ func _physics_process(delta: float) -> void:
 				velocity.x = (direction * move_speed) / 2
 				can_dash = false
 			velocity.x = direction * move_speed
-			
 		else:
 			velocity.x = move_speed
 			anim.play("Voando")
 		
 		if can_dash:
 			velocity.x += move_speed + dash_Spd
+
 	else:
 		velocity.x = 0
 		velocity.y = 0
 		die()
-		
 	move_and_slide()
+
 
 # Função para ativar o dash
 func activate_dash():
@@ -61,6 +62,7 @@ func activate_dash():
 		var tween : Tween = get_tree().create_tween().bind_node(self).set_trans(Tween.TRANS_ELASTIC)
 		tween.tween_property(anim, "modulate", Color.RED, 1)
 		tween.tween_property(anim, "modulate", Color.WHITE, 0.5)
+		
 func die():
 	anim.play("Morte")
 	can_move = false

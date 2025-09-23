@@ -123,6 +123,7 @@ size = Vector2(9, 22)
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_mask = 22
 script = ExtResource("1_6miq6")
+gravidade = 10.0
 
 [node name="anim" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_rul8u")
