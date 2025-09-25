@@ -31,6 +31,7 @@ func _physics_process(delta: float) -> void:
 			velocity.y = 0
 		
 		var direction = Input.get_axis("ui_left","ui_right")
+		
 		if direction !=0:
 			if direction < 0:
 				anim.play("freando")
