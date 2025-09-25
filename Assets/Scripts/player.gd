@@ -21,7 +21,7 @@ var can_move = true
 func _physics_process(delta: float) -> void:
 	
 	if can_move:
-		
+		#teste
 		# movimentacao cima e baixo
 		if Input.is_action_pressed("ui_up"):
 			velocity.y = jump_force
